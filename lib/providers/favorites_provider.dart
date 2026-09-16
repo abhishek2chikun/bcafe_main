@@ -5,7 +5,12 @@ import 'package:food_app/helpers/db_helper.dart';
 class FavoritesProvider with ChangeNotifier {
   List<Item> _favoriteItems = [];
 
-  List<Item> get favoriteItems => [..._favoriteItems];
+  /// Newest first. The list came back in whatever order SQLite happened to
+  /// return rows, so an item favourited just now could appear anywhere and
+  /// customers reported that favouriting "did nothing".
+  List<Item> get favoriteItems => _favoriteItems.reversed.toList();
+
+  int get favoriteCount => _favoriteItems.length;
 
   // Load favorites from SQL specifically for the logged-in user
   Future<void> fetchFavorites(String userId) async {
