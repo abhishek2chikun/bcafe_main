@@ -22,14 +22,27 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void _runSearch(String query) {
+    // Trimmed, because a trailing space from the keyboard's autocomplete
+    // turned every result list empty and looked like the catalogue was gone.
+    final term = query.trim().toLowerCase();
     setState(() {
-      if (query.isEmpty) {
+      if (term.isEmpty) {
         _filteredItems = dummyMenu;
       } else {
-        _filteredItems = dummyMenu
-            .where((item) =>
-                item.title.toLowerCase().contains(query.toLowerCase()))
-            .toList();
+        // Title first, then description and category: searching "bacon" or
+        // "pizza" found nothing, because the only thing ever matched was the
+        // product name and neither word appears in one.
+        final byTitle = <Item>[];
+        final byDetail = <Item>[];
+        for (final item in dummyMenu) {
+          if (item.title.toLowerCase().contains(term)) {
+            byTitle.add(item);
+          } else if (item.description.toLowerCase().contains(term) ||
+              item.category.toLowerCase().contains(term)) {
+            byDetail.add(item);
+          }
+        }
+        _filteredItems = [...byTitle, ...byDetail];
       }
     });
   }
