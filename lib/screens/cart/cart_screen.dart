@@ -176,7 +176,12 @@ class CartScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Total', style: TextStyle(fontSize: 20)),
+                      Text(
+                        cart.unitCount == 1
+                            ? 'Total · 1 item'
+                            : 'Total · ${cart.unitCount} items',
+                        style: const TextStyle(fontSize: 20),
+                      ),
                       Chip(
                         key: const Key('cart_total_chip'),
                         label: Text('\$${cart.totalAmount.toStringAsFixed(2)}', style: const TextStyle(color: Colors.white)), 
