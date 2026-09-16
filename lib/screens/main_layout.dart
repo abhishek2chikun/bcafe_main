@@ -4,6 +4,7 @@ import 'package:food_app/screens/profile/profile_screen.dart';
 import 'package:food_app/screens/search/search_screen.dart';
 import 'package:food_app/screens/orders/orders_screen.dart';
 import 'package:food_app/screens/favorites/favorites_screen.dart';
+import 'package:food_app/screens/rewards/rewards_screen.dart';
 
 class MainLayout extends StatefulWidget {
   final int initialIndex;
@@ -28,6 +29,7 @@ class _MainLayoutState extends State<MainLayout> {
     const SearchScreen(key: Key('search_screen')),
     const FavoritesScreen(key: Key('favorites_screen')),
     const OrdersScreen(key: Key('orders_screen')),
+    const RewardsScreen(key: Key('rewards_screen')),
     const ProfileScreen(key: Key('profile_screen')),
   ];
 
@@ -66,6 +68,10 @@ class _MainLayoutState extends State<MainLayout> {
           BottomNavigationBarItem(
             icon: Icon(Icons.receipt_long, key: Key('nav_orders_icon')),
             label: "Orders",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.card_giftcard, key: Key('nav_rewards_icon')),
+            label: "Rewards",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person, key: Key('nav_profile_icon')),
