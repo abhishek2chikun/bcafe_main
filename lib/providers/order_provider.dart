@@ -8,6 +8,15 @@ class OrderProvider with ChangeNotifier {
 
   List<PastOrder> get orders => [..._orders];
 
+  /// How many orders this account has placed. The Orders screen puts this in
+  /// its title, which is otherwise the only screen in the app that gives no
+  /// indication of how much is on it before you scroll.
+  int get orderCount => _orders.length;
+
+  /// What those orders came to. Read by the rewards balance and by the title.
+  double get totalSpent =>
+      _orders.fold(0.0, (sum, order) => sum + order.totalAmount);
+
   Future<void> fetchOrders(String userId) async {
     final orderData = await DBHelper.getData('orders', where: 'userId = ?', whereArgs: [userId]);
     
