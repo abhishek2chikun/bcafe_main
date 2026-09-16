@@ -47,7 +47,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
             gradient: LinearGradient(colors: [Colors.cyan, Colors.amber]),
           ),
         ),
-        title: const Text("My Orders", style: TextStyle(fontSize: 24)),
+        title: Text(
+          orderData.orderCount > 0
+              ? "My Orders (${orderData.orderCount})"
+              : "My Orders",
+          style: const TextStyle(fontSize: 24),
+        ),
         centerTitle: true,
         automaticallyImplyLeading: false,
         actions: [
