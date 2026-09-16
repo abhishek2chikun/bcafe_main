@@ -24,7 +24,13 @@ class FavoritesScreen extends StatelessWidget {
             gradient: LinearGradient(colors: [Colors.cyan, Colors.amber]),
           ),
         ),
-        title: const Text("My Favorites", style: TextStyle(fontSize: 24)),
+        title: Text(
+          favs.favoriteCount > 0
+              ? "My Favorites (${favs.favoriteCount})"
+              : "My Favorites",
+          key: const Key('favorites_title'),
+          style: const TextStyle(fontSize: 24),
+        ),
         centerTitle: true,
         actions: [
           Consumer<CartProvider>(
