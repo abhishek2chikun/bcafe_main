@@ -4,6 +4,7 @@ import 'package:food_app/providers/cart_provider.dart';
 import 'package:food_app/providers/favorites_provider.dart';
 import 'package:food_app/providers/auth_provider.dart';
 import 'package:food_app/providers/order_provider.dart';
+import 'package:food_app/providers/rewards_provider.dart';
 import 'package:food_app/screens/splash/splash_screen.dart';
 
 Future<void> main() async {
@@ -16,6 +17,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (c) => CartProvider()),
         ChangeNotifierProvider(create: (c) => FavoritesProvider()), // Removed early fetch
         ChangeNotifierProvider(create: (c) => OrderProvider()),
+        ChangeNotifierProvider(create: (c) => RewardsProvider()),
       ],
       child: const MyApp(),
     ),
