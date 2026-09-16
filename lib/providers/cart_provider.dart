@@ -16,7 +16,22 @@ class CartProvider with ChangeNotifier {
     return total;
   }
 
+  /// The most of one item the kitchen will accept in a single order. Orders
+  /// for a hundred of something were reaching the pass as real tickets, and a
+  /// stuck "+" button could get there in a few seconds.
+  static const int maxQuantityPerItem = 20;
+
+  /// True when [productId] is already at the cap, so the screen can say why
+  /// the button stopped working instead of appearing to ignore the tap.
+  bool isAtQuantityLimit(String productId) {
+    final existing = _items[productId];
+    return existing != null && existing.quantity >= maxQuantityPerItem;
+  }
+
   void addItem(String productId, double price, String title) {
+    if (isAtQuantityLimit(productId)) {
+      return;
+    }
     if (_items.containsKey(productId)) {
       _items.update(
         productId,
