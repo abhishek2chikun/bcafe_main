@@ -8,6 +8,13 @@ class CartProvider with ChangeNotifier {
 
   int get itemCount => _items.length;
 
+  /// How many units are in the cart, not how many lines it has. Three of one
+  /// burger is one line and three items, and the total row said "1 item"
+  /// either way — the one number on that row a customer can check against
+  /// what they picked.
+  int get unitCount =>
+      _items.values.fold(0, (sum, item) => sum + item.quantity);
+
   double get totalAmount {
     double total = 0.0;
     _items.forEach((key, cartItem) {
