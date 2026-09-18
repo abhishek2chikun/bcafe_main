@@ -12,17 +12,29 @@ class FavoritesProvider with ChangeNotifier {
 
   int get favoriteCount => _favoriteItems.length;
 
-  // Load favorites from SQL specifically for the logged-in user
+  // Load favorites from SQL specifically for the logged-in user.
+  //
+  // The favorites table only stores what the list tile needs — id, title,
+  // price, image — so rebuilding an Item straight from a row left category and
+  // description empty. That is invisible on this screen and wrong on the next
+  // one: opening a favourite showed the detail page with no description at all.
+  // The menu is the source of truth for those fields, so look the row up there
+  // and fall back to the stored columns only for an item the menu no longer has.
   Future<void> fetchFavorites(String userId) async {
     final dataList = await DBHelper.getData('favorites', where: 'userId = ?', whereArgs: [userId]);
-    _favoriteItems = dataList.map((item) => Item(
-      id: item['id'],
-      title: item['title'],
-      price: item['price'],
-      imageUrl: item['imageUrl'],
-      category: '', // Placeholder
-      description: '', // Placeholder
-    )).toList();
+    final menuById = {for (final item in dummyMenu) item.id: item};
+    _favoriteItems = dataList.map((row) {
+      final id = row['id'] as String;
+      final menuItem = menuById[id];
+      return Item(
+        id: id,
+        title: row['title'],
+        price: row['price'],
+        imageUrl: row['imageUrl'],
+        category: menuItem?.category ?? '',
+        description: menuItem?.description ?? '',
+      );
+    }).toList();
     notifyListeners();
   }
 
