@@ -176,12 +176,14 @@ class CartScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // One count for the whole screen: the badge and this row
-                      // now agree with each other.
+                      // Units, not lines. The badge above counts distinct
+                      // products; this row counts what the customer picked, so
+                      // three of one burger reads "3 items" here and "1" there.
+                      // They are meant to disagree.
                       Text(
-                        cart.itemCount == 1
+                        cart.unitCount == 1
                             ? 'Total · 1 item'
-                            : 'Total · ${cart.itemCount} items',
+                            : 'Total · ${cart.unitCount} items',
                         style: const TextStyle(fontSize: 20),
                       ),
                       Chip(
