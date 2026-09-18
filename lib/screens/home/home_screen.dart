@@ -40,11 +40,20 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         actions: [
           Consumer<CartProvider>(
-            builder: (_, cart, ch) => Badge(
-              key: const Key('home_cart_badge'),
-              label: Text(cart.itemCount.toString(), style: const TextStyle(color: Colors.white)),
-              backgroundColor: Colors.red,
-              child: ch,
+            // The badge counts distinct products, not units -- the total row
+            // in the cart is the one that counts units. The number was drawn
+            // but never announced, so nothing outside the app could read it
+            // and the two counts could silently converge.
+            builder: (_, cart, ch) => Semantics(
+              identifier: "home_cart_badge",
+              label: "Cart ${cart.itemCount} products",
+              container: true,
+              child: Badge(
+                key: const Key('home_cart_badge'),
+                label: Text(cart.itemCount.toString(), style: const TextStyle(color: Colors.white)),
+                backgroundColor: Colors.red,
+                child: ch,
+              ),
             ),
             child: Semantics(
               identifier: "home_cart_button",
