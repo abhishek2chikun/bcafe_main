@@ -176,6 +176,8 @@ class CartScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // One count for the whole screen: the badge and this row
+                      // now agree with each other.
                       Text(
                         cart.itemCount == 1
                             ? 'Total · 1 item'
