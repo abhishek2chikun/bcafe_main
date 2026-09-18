@@ -177,9 +177,9 @@ class CartScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        cart.unitCount == 1
+                        cart.itemCount == 1
                             ? 'Total · 1 item'
-                            : 'Total · ${cart.unitCount} items',
+                            : 'Total · ${cart.itemCount} items',
                         style: const TextStyle(fontSize: 20),
                       ),
                       Chip(
